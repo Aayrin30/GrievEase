@@ -1,0 +1,249 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Professors</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">GrievEase</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Professors</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#pro-all">List
+                        View</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#pro-grid">Grid View</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#pro-add">Add</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane active" id="pro-all">
+                <div class="table-responsive">
+                    <table class="table table-hover table-vcenter table_custom text-nowrap spacing5 border-style mb-0">
+                        <tbody>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Number</th>
+                                    <th>Department</th>
+                                    <th>Course</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            {% for i in prof %}
+
+                            <tr>
+                                <td class="w60">
+                                    <div class="avatar avatar-pink" data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Avatar Name">
+                                        <span>{{ i.firstName|slice:":1" }}{{ i.lastName|slice:":1" }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="font-15">{{ i.firstName}} {{i.lastName}}</div>
+                                </td>
+                                <td><span>+91 {{i.phoneNo}}</span></td>
+                                <td><span class="text-muted">{{i.course.deptId.deptName}}</span></td>
+                                <td>{{i.course.courseName}}</td>
+                                <td>
+                                    <a href="{% url 'professor-details' %}"><button type="button"
+                                            class="btn btn-icon btn-sm" title="Edit"><i
+                                                class="fa fa-eye"></i></button></a>
+                                    <button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete"
+                                        data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="pro-grid">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img class="card-profile-img" src="../assets/images/sm/avatar1.jpg" alt="">
+                                <h5 class="mb-1">Peter Richards</h5>
+                                <span class="mb-0">FCAIT</span>
+                                <div class="text-muted mb-4 mt-3">+ (916) 369-7180</div>
+                                <a href="{% url 'professor-details' %}"><button class="btn btn-primary btn-sm">Read
+                                        More</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img class="card-profile-img" src="../assets/images/sm/avatar2.jpg" alt="">
+                                <h5 class="mb-1">Ken Smith</h5>
+                                <span class="mb-0">FCAIT</span>
+                                <div class="text-muted mb-4 mt-3">+ (916) 369-7180</div>
+                                <a href="{% url 'professor-details' %}"><button class="btn btn-primary btn-sm">Read
+                                        More</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="pro-add">
+                <div class="row clearfix">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Single Account</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                            class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                            class="fe fe-x"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row clearfix">
+                                    <form action="{% url 'professors' %}" method="post">
+                                        {% csrf_token %}
+
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Enrollment No.</label>
+                                                <input type="number" class="form-control" name="uniqueId">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control" name="firstName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <input type="text" class="form-control " name="lastName">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Phone</label>
+                                                <input type="text" class="form-control" name="phoneNo">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="text" class="form-control" name="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label>Gender</label>
+                                            <select class="form-control show-tick" name="gender">
+                                                <option value="">-- Gender --</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Department</label>
+                                                <input type="text" class="form-control" name="department"
+                                                    value="{{ admin.department }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label>Course</label>
+                                            <select class="form-control show-tick" name="course">
+                                            
+                                                <option value="">-- Course --</option>
+                                                {% for i in courses %}
+                                                <option value="{{ i.courseName }}">{{ i.courseName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <label>Role</label>
+                                            <select class="form-control show-tick" name="role">
+                                                <option value="">-- Role --</option>
+                                                {% for i in roles %}
+                                                <option value="{{ i.roleName }}">{{ i.roleName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" , name="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Confirm Password</label>
+                                                <input type="password" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group mt-2 mb-3">
+                                                <input type="file" class="dropify">
+                                                <small id="fileHelp" class="form-text text-muted">This is some
+                                                    placeholder block-level help text for the above input. It's
+                                                    a bit lighter and easily wraps to a new line.</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Bulk Account</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                            class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                            class="fe fe-x"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'professors' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group mt-2 mb-3">
+                                                <input type="file" class="dropify" name="excel_file"
+                                                    accept=".xls,.xlsx">
+                                                <small id="fileHelp" class="form-text text-muted">Upload Excel
+                                                    File to Create Multiple Accounts</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="button" class="btn btn-outline-secondary">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

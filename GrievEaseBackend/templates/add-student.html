@@ -1,0 +1,180 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Students</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">GrievEase</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Students</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link active" href="#">List
+                        View</a></li>
+                <li class="nav-item">Add</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane active" id="Student-add">
+                <div class="row clearfix">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Single Account</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                            class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                            class="fe fe-x"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row clearfix">
+                                    <form action="{% url 'add-student' %}" method="post">
+                                        {% csrf_token %}
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Enrollment No.</label>
+                                                <input type="number" class="form-control" name="enrollmentno">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control" name="firstname">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Last Name</label>
+                                                <input type="text" class="form-control" name="lastname">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Phone</label>
+                                                <input type="text" class="form-control" name="phoneno">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="text" class="form-control" name="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label>Gender</label>
+                                            <select class="form-control show-tick" name="gender">
+                                                <option value="">-- Gender --</option>
+                                                <option value="10">Male</option>
+                                                <option value="20">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Department</label>
+                                                <input type="text" class="form-control" name="department"
+                                                    value="{{ admin.department }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label>Course</label>
+                                            <select class="form-control show-tick" name="course">
+                                                <option value="">-- Course --</option>
+                                                {% for i in courses %}
+                                                <option value="{{ i.courseName }}">{{ i.courseName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label>Role</label>
+                                            <select class="form-control show-tick" name="role">
+                                                <option value="">-- Role --</option>
+                                                {% for i in roles %}
+                                                <option value="{{ i.roleName }}">{{ i.roleName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <label>Division</label>
+                                            <select class="form-control show-tick" name="division">
+                                                <option value="">-- Division --</option>
+                                                <option value="10">A</option>
+                                                <option value="20">B</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" name="password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <label>Confirm Password</label>
+                                                <input type="password" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group mt-2 mb-3">
+                                                <input type="file" class="dropify">
+                                                <small id="fileHelp" class="form-text text-muted">This is some
+                                                    placeholder block-level help text for the above input. It's
+                                                    a bit lighter and easily wraps to a new line.</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Bulk Account</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                            class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                            class="fe fe-x"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'add-student' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group mt-2 mb-3">
+                                                <input type="file" class="dropify" name="excel_file">
+                                                <small id="fileHelp" class="form-text text-muted">Upload Excel
+                                                    File to Create Multiple Accounts</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

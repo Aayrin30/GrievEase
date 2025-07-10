@@ -1,0 +1,100 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Grievance Details</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">GrievEase</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ grievance.title }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Grievance Details -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>{{ grievance.title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong> Attached Images:</strong> </p>
+
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            {% for image in grievance.grievance_images.all %}
+                            <div
+                                style="width: 100px; height: 100px; overflow: hidden; border: 1px solid #ccc; border-radius: 5px; cursor: pointer;">
+                                <img src="{{ image.images.url }}" alt="Grievance Image"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            {% empty %}
+                            <p>No images uploaded.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Description:</strong> {{ grievance.description }}</p>
+                        <p><strong>Category:</strong> {{ grievance.category.categoryName }}</p>
+                        <p><strong>Status:</strong> {{ grievance.status }}</p>
+                        <p><strong>Submitted By:</strong> {{ grievance.user.firstName }} {{ grievance.user.lastName }}
+                        </p>
+                        <p><strong>Submitted On:</strong> {{ grievance.created_at|date:"M d, Y H:i" }}</p>
+                    </div>
+                    <form method="POST" action="{% url 'assign_grievance' gid=grievance.id %}">
+                        {% csrf_token %}
+                        <div class="col-md-4 col-sm-12 ml-10">
+                            {% if grievance.assigned_staff %}
+                                <label>Staff: {{ grievance.assigned_staff.firstName }} {{ grievance.assigned_staff.lastName }}</label>
+                            {% else %}
+                                <label>Assign Staff:</label>
+                                <select class="form-control show-tick" name="staff">
+                                    <option value="">-- Select Staff --</option>
+                                    {% for staff in staff %}
+                                        <option value="{{ staff.staffId }}">{{ staff.firstName }} {{ staff.lastName }} ({{ staff.designation }})</option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                        </div>
+                    
+                        <div class="card-body text-center">
+                            <button type="submit" class="btn btn-primary btn-sm">Assign</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+
+            <!-- Grievance Images
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Attached Images</h5>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            {% for image in grievance.grievance_images.all %}
+                            <div
+                                style="width: 100px; height: 100px; overflow: hidden; border: 1px solid #ccc; border-radius: 5px;">
+                                <img src="{{ image.images.url }}" alt="Grievance Image"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            {% empty %}
+                            <p>No images uploaded.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+{% endblock %}

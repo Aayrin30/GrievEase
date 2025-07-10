@@ -1,0 +1,222 @@
+{% extends 'navbar.html' %}
+{% load static %}
+{% block body %}
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Staff</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">GrievEase</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Staff</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Staff-all">List View</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Staff-grid">Grid View</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Staff-add">Add</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane active" id="Staff-all">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-vcenter text-nowrap table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Number</th>
+                                    <th>Designation</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for staff in staff_list %}
+                                <tr>
+                                    <td class="w60">
+                                        {% if staff.image %}
+                                        <img class="avatar" src="../assets/images/xs/avatar3.jpg" alt="">
+                                        {% else %}
+                                        <div class="avatar avatar-pink" data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="{{ staff.firstName }} {{ staff.lastName }}">
+                                            <span>{{ staff.firstName|slice:":1"|upper }}{{ staff.lastName|slice:":1"|upper }}</span>
+                                        </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="font-15">{{staff.firstName}} {{staff.lastName}}</div>
+                                    </td>
+                                    <td><span>{{staff.phoneNo}}</span></td>
+                                    <td><span class="text-muted">{{staff.designation}}</span></td>
+                                    <td>{{staff.email}}</td>
+                                    <td>
+                                        <a href="{% url 'staff-details' %}"><button type="button" class="btn btn-icon btn-sm"
+                                                title="Edit"><i class="fa fa-eye"></i></button></a>
+                                        <button type="button" class="btn btn-icon btn-sm js-sweetalert" title="Delete"
+                                            data-type="confirm"><i class="fa fa-trash-o text-danger"></i></button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="Staff-grid">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img class="card-profile-img" src="../assets/images/sm/avatar1.jpg" alt="">
+                                <h5 class="mb-0">Peter Richards</h5>
+                                <span>Librarian</span>
+                                <div class="text-muted mb-4 mt-3">+ (916) 369-7180</div>
+                                <a href="{% url 'staff-details' %}"><button class="btn btn-primary btn-sm">Read
+                                        More</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img class="card-profile-img" src="../assets/images/sm/avatar2.jpg" alt="">
+                                <h5 class="mb-0">Ken Smith</h5>
+                                <span>Clerk</span>
+                                <div class="text-muted mb-4 mt-3">+ (916) 369-7180</div>
+                                <a href="{% url 'staff-details' %}"><button class="btn btn-primary btn-sm">Read
+                                        More</button></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane" id="Staff-add">
+                <div class="row clearfix">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Single Account</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                            class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                            class="fe fe-x"></i></a>
+                                </div>
+                            </div>
+                            <form method="POST" action="{% url 'staff' %}">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="row clearfix">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" name="firstName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" name="lastName">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input type="text" class="form-control" name="phoneNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <label>Gender</label>
+                                        <select class="form-control show-tick" name="gender">
+                                            <option value="">-- Gender --</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <label>Designation</label>
+                                        <select class="form-control show-tick" name="designation">
+                                            <option value="">-- Designation --</option>
+                                            <option value="Electrician">Electrician</option>
+                                            <option value="Plumber">Plumber</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 mt-15">
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control" name="password">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 mt-15">
+                                        <div class="form-group">
+                                            <label>Confirm Password</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt-2 mb-3">
+                                            <input type="file" class="dropify">
+                                            <small id="fileHelp" class="form-text text-muted">This is some
+                                                placeholder block-level help text for the above input. It's
+                                                a bit lighter and easily wraps to a new line.</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Bulk Account</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i
+                                            class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i
+                                            class="fe fe-x"></i></a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action="{% url 'staff' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt-2 mb-3">
+                                            <input type="file" class="dropify" name="excel_file">
+                                            <small id="fileHelp" class="form-text text-muted">Upload Excel
+                                                File to Create Multiple Accounts</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-outline-secondary">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
