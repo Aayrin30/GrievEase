@@ -57,13 +57,13 @@ flutter pub get
 flutter run
 ```
 🛠️ 2. Running the Django Backend (GrievEaseBackend)
-Prerequisites:
+> **Prerequisites:**
+> - Python 3.7+
+> - pip
+> - virtualenv (recommended)
+> - MySQL/PostgreSQL or SQLite
 
-Python 3.7+
-pip
-virtualenv (recommended)
-MySQL/PostgreSQL or SQLite
-
+```bash
 # Navigate to the backend folder
 cd GrievEaseBackend
 
@@ -79,6 +79,7 @@ python manage.py migrate
 
 # Start the Django development server
 python manage.py runserver
+```
 By default, the server runs on http://127.0.0.1:8000/
 
 
