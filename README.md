@@ -84,5 +84,5 @@ By default, the server runs on http://127.0.0.1:8000/
 
 
 
-🔗 API Integration
+### 🔗 API Integration
 The Flutter frontend interacts with the Django backend via RESTful APIs. Make sure both the frontend and backend are running and properly connected (update the base URL in the Flutter app if needed).
