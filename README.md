@@ -56,7 +56,7 @@ flutter pub get
 # Run the app on a connected device or emulator
 flutter run
 ```
-🛠️ 2. Running the Django Backend (GrievEaseBackend)
+### 🛠️ 2. Running the Django Backend (GrievEaseBackend)
 > **Prerequisites:**
 > - Python 3.7+
 > - pip
